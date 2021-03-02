@@ -1,5 +1,6 @@
 {
   "name": "mevn-template-es6",
+  "type": "module",
   "version": "0.0.1",
   "description": "MEVN stack template with ES6 syntax.",
   "main": "server/app.js",
