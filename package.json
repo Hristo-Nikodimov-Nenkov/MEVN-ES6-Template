@@ -1,0 +1,11 @@
+{
+  "name": "mevn-template-es6",
+  "version": "0.0.1",
+  "description": "MEVN stack template with ES6 syntax.",
+  "main": "server/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hristo Nikodimov Nenkov",
+  "license": "UNLICENSED"
+}
