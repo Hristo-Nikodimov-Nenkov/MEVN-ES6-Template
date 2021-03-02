@@ -1,9 +1,16 @@
-import express from 'express';
+import express from "express";
+
+import cors from "./middlewares/cors.js";
+import staticFiles from "./middlewares/staticFiles.js";
+import bodyParser from "./middlewares/bodyParser.js";
+import routes from "./middlewares/routes.js";
+import server from "./middlewares/server.js";
 
 const app = express();
 
-//TODO: Extract to server middleware.
+cors(app);
+staticFiles(app);
+bodyParser(app);
 
-const devPort = 9000;
-const port = process.env.PORT || devPort;
-app.listen(port, ()=> console.log(`Server started on port ${port}.`));
+routes(app);
+server(app);
