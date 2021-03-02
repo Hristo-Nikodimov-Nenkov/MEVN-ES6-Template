@@ -4,6 +4,8 @@
   "description": "MEVN stack template with ES6 syntax.",
   "main": "server/app.js",
   "scripts": {
+    "start": "node server/app.js",
+    "dev" : "nodemon server/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Hristo Nikodimov Nenkov",
