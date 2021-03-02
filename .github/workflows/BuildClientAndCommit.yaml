@@ -8,12 +8,10 @@ jobs:
     name: Build client application.
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout master branch
-        uses: actions/checkout@master
-      - name: Configure git
-        run: |
-          git config user.email ${{secrets.EMAIL}}
-          git config user.name ${{secrets.NAME}}
+      - uses: actions/checkout@v2
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
       - name: Remove previous client application build.
         uses: JesseTG/rm@v1.0.2
         with:
@@ -26,6 +24,6 @@ jobs:
         run: npm run build
       - name: Commit
         run: |
-          git add -A .
+          git add .
           git commit -m "Client application builded by CI workflow"
-          git push origin master
+          git push
