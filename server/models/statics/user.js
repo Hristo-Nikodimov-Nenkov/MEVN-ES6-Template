@@ -15,8 +15,28 @@ async function usernameOrEmailExists(identifier) {
     return !!user;
 }
 
+async function findByUsername(username) {
+    return await this.findOne({username: username}).exec();
+}
+
+async function findByEmail(email) {
+    return await this.findOne({email: email}).exec();
+}
+
+async function findByUsernameOrEmail(identifier) {
+    let user = await findByUsername(identifier);
+    if (!user) {
+        user = await findByEmail(identifier)
+    }
+
+    return user;
+}
+
 export default {
     usernameExists,
     emailExists,
-    usernameOrEmailExists
+    usernameOrEmailExists,
+    findByUsername,
+    findByEmail,
+    findByUsernameOrEmail
 }
