@@ -1,8 +1,11 @@
+export const defaultDbName = "mevn-es6-template";
+export const defaultEnvironment = "development";
+
 const connections = {
     development: {
-        host: "",
+        host: "localhost",
         port: 27015,
-        dbName: "mevn-es6-template"
+        dbName: defaultDbName
     },
     production: {
         host: process.env.DB_HOST,
@@ -31,8 +34,8 @@ export default function getConnectionString(env) {
     const connection = connections[env];
 
     if (!connection) {
-        `Database connection for ${env} environment NOT FOUND - Development connection will be used instead.`;
+        `Database connection for ${env} environment NOT FOUND - Default environment connection will be used instead.`;
     }
 
-    return generateConnectionString(connections[env] || connections["development"]);
+    return generateConnectionString(connections[env] || connections[defaultEnvironment]);
 }
