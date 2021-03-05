@@ -48,5 +48,6 @@ export function getConnectionString(env = defaultEnvironment) {
 export default {
     defaultDbName,
     defaultEnvironment,
+    defaultConnectionOptions,
     getConnectionString
 }
