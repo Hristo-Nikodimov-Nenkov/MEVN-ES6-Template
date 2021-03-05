@@ -13,5 +13,4 @@ for (const staticName in statics) {
 }
 
 const User = mongoose.model("User", userSchema, "users");
-
 export default User;
