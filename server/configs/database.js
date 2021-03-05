@@ -31,23 +31,24 @@ function generateConnectionString(connection) {
     return connectionString;
 }
 
-export function getConnectionString(env = defaultEnvironment) {
-    if (!env) {
-        env = process.env.NODE_ENV;
-    }
-
-    const connection = connections[env];
+export function getConnection(env = defaultEnvironment){
+    let connection = connections[env];
 
     if (!connection) {
         `Database connection for ${env} environment NOT FOUND - Default environment connection will be used instead.`;
+        connection = connections[defaultEnvironment];
     }
 
-    return generateConnectionString(connections[env] || connections[defaultEnvironment]);
+    return connection;
+}
+export function getConnectionString(env = defaultEnvironment) {
+    return generateConnectionString(getConnection(env));
 }
 
 export default {
     defaultDbName,
     defaultEnvironment,
     defaultConnectionOptions,
+    getConnection,
     getConnectionString
 }
