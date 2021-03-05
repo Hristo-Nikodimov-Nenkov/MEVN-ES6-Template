@@ -9,7 +9,7 @@ export const defaultConnectionOptions = {
 const connections = {
     development: {
         host: "localhost",
-        port: 27015,
+        port: 27017,
         dbName: defaultDbName
     },
     production: {
