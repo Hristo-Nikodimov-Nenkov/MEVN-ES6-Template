@@ -1,7 +1,7 @@
-import {Schema} from "mongoose";
+import mongoose from "mongoose";
 import {usernameLength} from "../../validations/account.js";
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
