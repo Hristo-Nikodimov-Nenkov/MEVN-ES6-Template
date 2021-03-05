@@ -1,11 +1,11 @@
 import {body} from "express-validator";
 
-const usernameLength = {
+export const usernameLength = {
     min: 6,
     max: 30
 }
 
-const passwordLength = {
+export const passwordLength = {
     min: 8,
     max: 40
 }
