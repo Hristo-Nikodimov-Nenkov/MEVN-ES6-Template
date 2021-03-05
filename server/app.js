@@ -1,5 +1,7 @@
 import express from "express";
 
+import database from "./middlewares/database.js";
+
 import cors from "./middlewares/cors.js";
 import staticFiles from "./middlewares/staticFiles.js";
 import bodyParser from "./middlewares/bodyParser.js";
@@ -10,6 +12,9 @@ import routes from "./middlewares/routes.js";
 import server from "./middlewares/server.js";
 
 const app = express();
+
+database();
+
 cors(app);
 
 staticFiles(app);
