@@ -26,7 +26,7 @@ function generateConnectionString(connection) {
     return connectionString;
 }
 
-export default function getConnectionString(env) {
+export function getConnectionString(env) {
     if (!env) {
         env = process.env.NODE_ENV
     }
@@ -38,4 +38,10 @@ export default function getConnectionString(env) {
     }
 
     return generateConnectionString(connections[env] || connections[defaultEnvironment]);
+}
+
+export default {
+    defaultDbName,
+    defaultEnvironment,
+    getConnectionString
 }
