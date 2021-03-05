@@ -1,5 +1,10 @@
 export const defaultDbName = "mevn-es6-template";
 export const defaultEnvironment = "development";
+export const defaultConnectionOptions = {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true
+}
 
 const connections = {
     development: {
