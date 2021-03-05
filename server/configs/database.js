@@ -39,16 +39,13 @@ export function getConnection(env = defaultEnvironment){
         connection = connections[defaultEnvironment];
     }
 
+    connection.connectionString = generateConnectionString(connection);
     return connection;
-}
-export function getConnectionString(env = defaultEnvironment) {
-    return generateConnectionString(getConnection(env));
 }
 
 export default {
     defaultDbName,
     defaultEnvironment,
     defaultConnectionOptions,
-    getConnection,
-    getConnectionString
+    getConnection
 }
