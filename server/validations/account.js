@@ -31,6 +31,7 @@ export let registerModelValidation = [
         .bail()
         .isLength(passwordLength)
         .withMessage(`Password must be from ${passwordLength.min} to ${passwordLength.max} symbols long.`)
+        .bail()
         .matches(/[a-z]+/)
         .withMessage("Password must contain small letter")
         .matches(/[A-Z]+/)
