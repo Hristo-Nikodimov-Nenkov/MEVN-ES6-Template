@@ -26,9 +26,9 @@ function generateConnectionString(connection) {
     return connectionString;
 }
 
-export function getConnectionString(env) {
+export function getConnectionString(env = defaultEnvironment) {
     if (!env) {
-        env = process.env.NODE_ENV
+        env = process.env.NODE_ENV;
     }
 
     const connection = connections[env];
