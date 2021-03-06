@@ -1,4 +1,5 @@
 export const authenticationCookieName = "AuthCookie";
+export const defaultEnvironment = "development";
 
 const configs = {
     "development": {
@@ -19,4 +20,4 @@ const configs = {
     }
 }
 
-export default configs[process.env.NODE_ENV] || configs["development"];
+export default configs[process.env.NODE_ENV] || configs[defaultEnvironment];
