@@ -39,7 +39,13 @@ export async function login(model) {
     }
 }
 
+export async function remove(id) {
+    const deleted = await User.findByIdAndRemove(id, {useFindAndModify: false}).exec();
+    return !!deleted;
+}
+
 export default {
     register,
-    login
+    login,
+    remove
 }
