@@ -46,7 +46,21 @@ async function profileUpdate(req, res) {
 }
 
 async function profileDelete(req, res) {
-    res.status(200).send("DELETE: /Account/Profile");
+    if (req.body.verificationToken && security.checkDeleteToken(req.body.verificationToken, req.user.id)) {
+        const deleted = await account.remove(req.user.id);
+        if (deleted) {
+            res.status(200).send(`User with Username: ${req.user.username} and E-Mail: ${req.user.email} - DELETED!`);
+            return;
+        } else {
+            res.status(400).send(`User with Username: ${req.user.username} and E-Mail: ${req.user.email} - IS NOT DELETED!`);
+            return;
+        }
+    }
+
+    const deleteToken = security.generateDeleteToken({
+        id: req.user.id
+    });
+    res.status(200).send(deleteToken);
 }
 
 export default {
