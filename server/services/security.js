@@ -18,10 +18,17 @@ export function isAuthenticatedAs(role = "User") {
     }
 }
 
-
-import {authenticationCookieName} from "../configs/cookies.js";
 import jwt from "jsonwebtoken";
 import jwtConfigs from "../configs/jwt.js";
+import {authenticationCookieName} from "../configs/cookies.js";
+
+export function generateToken(user) {
+    try {
+        return jwt.sign(user, jwtConfigs.secret, jwtConfigs.options);
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 export function authenticate() {
     return function (req, res, next) {
@@ -45,5 +52,6 @@ export function authenticate() {
 export default {
     isAuthenticated,
     isAuthenticatedAs,
+    generateToken,
     authenticate
 }
