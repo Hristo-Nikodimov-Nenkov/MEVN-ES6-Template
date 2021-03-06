@@ -40,6 +40,16 @@ export function generateDeleteToken(user) {
     }
 }
 
+export function checkDeleteToken(token) {
+    try {
+        const decoded = jwt.verify(token, jwtConfigs.secret, jwtConfigs.options);
+
+        return !!decoded;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export function authenticate() {
     return function (req, res, next) {
         const authenticationCookie = req.cookies[authenticationCookieName] || req.signedCookies[authenticationCookieName];
@@ -63,5 +73,6 @@ export default {
     isAuthenticatedAs,
     generateToken,
     generateDeleteToken,
+    checkDeleteToken,
     authenticate
 }
