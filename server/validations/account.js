@@ -1,15 +1,6 @@
 import {body} from "express-validator";
 import User from "../models/User.js";
-
-export const usernameLength = {
-    min: 6,
-    max: 30
-}
-
-export const passwordLength = {
-    min: 8,
-    max: 40
-}
+import {usernameLength, passwordLength} from "../models/schemas/user.js";
 
 export let registerModelValidation = [
     body("username")

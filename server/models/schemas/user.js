@@ -1,5 +1,14 @@
 import mongoose from "mongoose";
-import {usernameLength} from "../../validations/account.js";
+
+export const usernameLength = {
+    min: 6,
+    max: 30
+}
+
+export const passwordLength = {
+    min: 8,
+    max: 40
+}
 
 const userSchema = new mongoose.Schema({
     username: {
