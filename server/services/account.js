@@ -15,13 +15,31 @@ export async function register(model) {
     }
 
     return {
-        id: user._id,
         username: user.username,
         email: user.email,
         phoneNumber: user.phoneNumber
     }
 }
 
+export async function login(model) {
+    try {
+        const user = await User.findByUsernameOrEmail(model.username);
+        if (!user || !user.checkPassword(model.password)) {
+            return null;
+        }
+
+        return {
+            id: user._id,
+            username: user.username,
+            email: user.email,
+            phoneNumber: user.phoneNumber
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export default {
-    register
+    register,
+    login
 }
