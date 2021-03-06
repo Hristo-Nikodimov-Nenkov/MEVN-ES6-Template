@@ -24,9 +24,9 @@ async function findByEmail(email) {
 }
 
 async function findByUsernameOrEmail(identifier) {
-    let user = await findByUsername(identifier);
+    let user = await this.findByUsername(identifier);
     if (!user) {
-        user = await findByEmail(identifier)
+        user = await this.findByEmail(identifier)
     }
 
     return user;
