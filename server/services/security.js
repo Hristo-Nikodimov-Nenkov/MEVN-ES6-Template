@@ -22,7 +22,6 @@ import {authenticationCookieName} from "../configs/cookies.js";
 export function authenticate() {
     return function (req, res, next) {
         const authenticationCookie = req.cookies[authenticationCookieName] || req.signedCookies[authenticationCookieName];
-        console.log(`AuthenticationCookie: ${authenticationCookie}`);
         if (authenticationCookie) {
             //TODO: Change to JWT verify.
             req.user = JSON.parse(authenticationCookie)
