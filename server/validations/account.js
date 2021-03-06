@@ -1,4 +1,5 @@
 import {body} from "express-validator";
+import User from "../models/User.js";
 
 export const usernameLength = {
     min: 6,
@@ -13,6 +14,14 @@ export const passwordLength = {
 export let registerModelValidation = [
     body("username")
         .toLowerCase()
+        .custom(value => {
+            return User.usernameExists(value)
+                .then(exists => {
+                    if (exists) {
+                        return Promise.reject('Username already registered.');
+                    }
+                })
+        })
         .exists()
         .withMessage("Username is required.")
         .bail()
@@ -20,6 +29,14 @@ export let registerModelValidation = [
         .withMessage(`Username must have between ${usernameLength.min} and ${usernameLength.max} symbols.`),
     body("email")
         .toLowerCase()
+        .custom(value => {
+            return User.emailExists(value)
+                .then(exists => {
+                    if (exists) {
+                        return Promise.reject('E-Mail already registered.');
+                    }
+                })
+        })
         .exists()
         .withMessage("E-Mail is required.")
         .bail()
