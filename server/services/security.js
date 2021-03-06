@@ -40,23 +40,25 @@ export function generateDeleteToken(user) {
     }
 }
 
-export function checkDeleteToken(token) {
+export function checkDeleteToken(token, userId) {
     try {
         const decoded = jwt.verify(token, jwtConfigs.secret, jwtConfigs.options);
 
-        return !!decoded;
+        return !!decoded && decoded.id === userId;
     } catch (err) {
         console.log(err);
     }
 }
 
+import User from "../models/User.js";
+
 export function authenticate() {
-    return function (req, res, next) {
+    return async function (req, res, next) {
         const authenticationCookie = req.cookies[authenticationCookieName] || req.signedCookies[authenticationCookieName];
         if (authenticationCookie) {
             try {
                 const decoded = jwt.verify(authenticationCookie, jwtConfigs.secret, jwtConfigs.options);
-                if (decoded) {
+                if (decoded && await User.usernameExists(decoded.username)) {
                     req.user = decoded;
                 }
             } catch (err) {
