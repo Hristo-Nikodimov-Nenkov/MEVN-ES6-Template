@@ -1,5 +1,6 @@
 import cookiesConfigs from "../configs/cookies.js";
 import {validationResult} from "express-validator";
+import account from "../services/account.js";
 
 async function registerPost(req, res) {
     const errors = validationResult(req).array();
@@ -8,7 +9,9 @@ async function registerPost(req, res) {
         return;
     }
 
-    res.status(200).send("POST: /Account/Register");
+    const created = await account.register(req.body);
+    delete created["id"];
+    res.status(200).send(created);
 }
 
 async function loginPost(req, res) {
