@@ -1,6 +1,7 @@
 import cookiesConfigs from "../configs/cookies.js";
 import {validationResult} from "express-validator";
 import account from "../services/account.js";
+import security from "../services/security.js";
 
 async function registerPost(req, res) {
     const errors = validationResult(req).array();
@@ -10,24 +11,34 @@ async function registerPost(req, res) {
     }
 
     const created = await account.register(req.body);
-    delete created["id"];
     res.status(200).send(created);
 }
 
 async function loginPost(req, res) {
-    console.log(req.body);
-    res.cookie(cookiesConfigs.authenticationCookieName, JSON.stringify(["User"]), cookiesConfigs.options);
-    res.status(200).send("POST: /Account/Login");
+    const user = await account.login(req.body);
+    if (!user) {
+        res.status(400).send("Invalid credentials.");
+        return;
+    }
+
+    const token = security.generateToken(user);
+    res.cookie(cookiesConfigs.authenticationCookieName, token, cookiesConfigs.options);
+
+    delete user["id"];
+    res.status(200).send(user);
 }
 
 async function logoutPost(req, res) {
     res.clearCookie(cookiesConfigs.authenticationCookieName);
-    res.status(200).send("POST: /Account/Logout");
+    res.status(200).send("Logout successful.");
 }
 
 async function profileGet(req, res) {
-    console.log(req.user);
-    res.status(200).send("GET: /Account/Profile");
+    res.status(200).send({
+        username: req.user.username,
+        email: req.user.email,
+        phoneNumber: req.user.phoneNumber
+    });
 }
 
 async function profileUpdate(req, res) {
