@@ -30,6 +30,16 @@ export function generateToken(user) {
     }
 }
 
+export function generateDeleteToken(user) {
+    try {
+        const deleteOptions = jwtConfigs.options;
+        deleteOptions.expiresIn = "120s";
+        return jwt.sign(user, jwtConfigs.secret, deleteOptions);
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export function authenticate() {
     return function (req, res, next) {
         const authenticationCookie = req.cookies[authenticationCookieName] || req.signedCookies[authenticationCookieName];
@@ -52,5 +62,6 @@ export default {
     isAuthenticated,
     isAuthenticatedAs,
     generateToken,
+    generateDeleteToken,
     authenticate
 }
