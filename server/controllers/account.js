@@ -1,6 +1,13 @@
 import cookiesConfigs from "../configs/cookies.js";
+import {validationResult} from "express-validator";
 
 async function registerPost(req, res) {
+    const errors = validationResult(req).array();
+    if (errors.length > 0) {
+        res.status(400).send(errors);
+        return;
+    }
+
     res.status(200).send("POST: /Account/Register");
 }
 
