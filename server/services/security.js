@@ -34,14 +34,13 @@ export function authenticate() {
     return function (req, res, next) {
         const authenticationCookie = req.cookies[authenticationCookieName] || req.signedCookies[authenticationCookieName];
         if (authenticationCookie) {
-            const decoded = jwt.verify(authenticationCookie, jwtConfigs.secret, jwtConfigs.options);
-            if (decoded) {
-                const payload = decoded.split(".")[1];
-                try {
-                    req.user = JSON.parse(new Buffer(payload, 'base64').toString("utf-8"));
-                } catch (err) {
-                    console.log(err);
+            try {
+                const decoded = jwt.verify(authenticationCookie, jwtConfigs.secret, jwtConfigs.options);
+                if (decoded) {
+                    req.user = decoded;
                 }
+            } catch (err) {
+                console.log(err);
             }
         }
 
