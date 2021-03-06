@@ -1,9 +1,9 @@
 async function usernameExists(username) {
-    return await this.findOne({username: username}).exec();
+    return !!await this.findOne({username: username}).exec();
 }
 
 async function emailExists(email) {
-    return await this.findOne({email: email}).exec();
+    return !!await this.findOne({email: email}).exec();
 }
 
 async function usernameOrEmailExists(identifier) {
