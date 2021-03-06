@@ -1,4 +1,4 @@
-import appConfigs from "./app";
+import appConfigs from "./app.js";
 
 export const defaultEnvironment = "development";
 
