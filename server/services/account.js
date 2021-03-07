@@ -39,6 +39,28 @@ export async function login(model) {
     }
 }
 
+export async function update(id, model) {
+    const updateModel = {
+        username: model.username,
+        email: model.email,
+        phoneNumber: model.phoneNumber
+    }
+
+    try {
+        const updated = await User.findByIdAndUpdate(id, updateModel, {
+            omitUndefined: true,
+            returnOriginal: false
+        });
+        return {
+            username: updated.username,
+            email: updated.email,
+            phoneNumber: updated.phoneNumber
+        };
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export async function remove(id) {
     const deleted = await User.findByIdAndRemove(id, {useFindAndModify: false}).exec();
     return !!deleted;
@@ -47,5 +69,6 @@ export async function remove(id) {
 export default {
     register,
     login,
+    update,
     remove
 }
