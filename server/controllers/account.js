@@ -15,6 +15,12 @@ async function registerPost(req, res) {
 }
 
 async function loginPost(req, res) {
+    const errors = validationResult(req).array();
+    if (errors.length > 0) {
+        res.status(400).send(errors);
+        return;
+    }
+
     const user = await account.login(req.body);
     if (!user) {
         res.status(400).send("Invalid credentials.");
