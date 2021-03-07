@@ -45,6 +45,10 @@ async function profileUpdate(req, res) {
     res.status(200).send("PUT: /Account/Profile");
 }
 
+async function passwordUpdate(req, res) {
+    res.status(200).send("POST: /Account/Profile/Password");
+}
+
 async function profileDelete(req, res) {
     if (req.body.verificationToken && security.checkDeleteToken(req.body.verificationToken, req.user.id)) {
         const deleted = await account.remove(req.user.id);
@@ -69,5 +73,6 @@ export default {
     logoutPost,
     profileGet,
     profileUpdate,
+    passwordUpdate,
     profileDelete
 }
