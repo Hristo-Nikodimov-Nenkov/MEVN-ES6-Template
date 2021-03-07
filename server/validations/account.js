@@ -2,7 +2,7 @@ import {body} from "express-validator";
 import User from "../models/User.js";
 import {usernameLength, passwordLength} from "../models/schemas/user.js";
 
-export const registerModelValidation = [
+const usernameValidation =
     body("username")
         .toLowerCase()
         .custom(value => {
@@ -17,7 +17,9 @@ export const registerModelValidation = [
         .withMessage("Username is required.")
         .bail()
         .isLength(usernameLength)
-        .withMessage(`Username must have between ${usernameLength.min} and ${usernameLength.max} symbols.`),
+        .withMessage(`Username must have between ${usernameLength.min} and ${usernameLength.max} symbols.`);
+
+const emailValidation =
     body("email")
         .toLowerCase()
         .custom(value => {
@@ -32,7 +34,9 @@ export const registerModelValidation = [
         .withMessage("E-Mail is required.")
         .bail()
         .isEmail()
-        .withMessage("Invalid E-Mail."),
+        .withMessage("Invalid E-Mail.");
+
+const passwordValidation =
     body("password")
         .exists()
         .withMessage("Password is required.")
@@ -47,7 +51,9 @@ export const registerModelValidation = [
         .matches(/[0-9]+/)
         .withMessage("Password must contain digit")
         .matches(/[^a-zA-Z\d\s:]+/)
-        .withMessage("Password must contain non-alphanumeric symbol."),
+        .withMessage("Password must contain non-alphanumeric symbol.");
+
+const confirmPasswordValidation =
     body("confirmPassword")
         .exists()
         .withMessage("Confirm password is required.")
@@ -58,53 +64,48 @@ export const registerModelValidation = [
             } else {
                 return val;
             }
-        })
+        });
+
+const phoneNumberValidation =
+    body("phoneNumber")
+        .toLowerCase();
+
+const loginUsernameValidation =
+    body("username")
+        .exists()
+        .withMessage("Username is required.");
+
+const loginPasswordValidation =
+    body("password")
+        .exists()
+        .withMessage("Password is required.");
+
+export const registerModelValidation = [
+    usernameValidation,
+    emailValidation,
+    passwordValidation,
+    confirmPasswordValidation
 ]
 
 export const loginModelValidation = [
-    body("username")
-        .exists()
-        .withMessage("Username is required."),
-    body("password")
-        .exists()
-        .withMessage("Password is required.")
+    loginUsernameValidation,
+    loginPasswordValidation
 ]
 
 export const updateProfileValidation = [
-    body("username")
-        .toLowerCase()
-        .custom(value => {
-            return User.usernameExists(value)
-                .then(exists => {
-                    if (exists) {
-                        return Promise.reject('Username already registered.');
-                    }
-                })
-        })
-        .exists()
-        .withMessage("Username is required.")
-        .bail()
-        .isLength(usernameLength)
-        .withMessage(`Username must have between ${usernameLength.min} and ${usernameLength.max} symbols.`),
-    body("email")
-        .toLowerCase()
-        .custom(value => {
-            return User.emailExists(value)
-                .then(exists => {
-                    if (exists) {
-                        return Promise.reject('E-Mail already registered.');
-                    }
-                })
-        })
-        .exists()
-        .withMessage("E-Mail is required.")
-        .bail()
-        .isEmail()
-        .withMessage("Invalid E-Mail.")
+    usernameValidation,
+    emailValidation,
+    phoneNumberValidation
+]
+
+export const changePasswordValidation = [
+    passwordValidation,
+    confirmPasswordValidation
 ]
 
 export default {
     registerModelValidation,
     loginModelValidation,
-    updateProfileValidation
+    updateProfileValidation,
+    changePasswordValidation
 }
