@@ -48,7 +48,23 @@ async function profileGet(req, res) {
 }
 
 async function profileUpdate(req, res) {
-    res.status(200).send("PUT: /Account/Profile");
+    const errors = validationResult(req).array();
+    if (errors.length > 0) {
+        res.status(400).send(errors);
+        return;
+    }
+
+    try {
+        const updated = await account.update(req.user.id, req.body);
+        if (!updated) {
+            res.status(400).send("Profile was NOT updated.");
+            return;
+        }
+
+        res.status(200).send(updated);
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 async function passwordUpdate(req, res) {
