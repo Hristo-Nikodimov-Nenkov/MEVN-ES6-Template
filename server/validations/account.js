@@ -70,7 +70,41 @@ export const loginModelValidation = [
         .withMessage("Password is required.")
 ]
 
+export const updateProfileValidation = [
+    body("username")
+        .toLowerCase()
+        .custom(value => {
+            return User.usernameExists(value)
+                .then(exists => {
+                    if (exists) {
+                        return Promise.reject('Username already registered.');
+                    }
+                })
+        })
+        .exists()
+        .withMessage("Username is required.")
+        .bail()
+        .isLength(usernameLength)
+        .withMessage(`Username must have between ${usernameLength.min} and ${usernameLength.max} symbols.`),
+    body("email")
+        .toLowerCase()
+        .custom(value => {
+            return User.emailExists(value)
+                .then(exists => {
+                    if (exists) {
+                        return Promise.reject('E-Mail already registered.');
+                    }
+                })
+        })
+        .exists()
+        .withMessage("E-Mail is required.")
+        .bail()
+        .isEmail()
+        .withMessage("Invalid E-Mail.")
+]
+
 export default {
     registerModelValidation,
-    loginModelValidation
+    loginModelValidation,
+    updateProfileValidation
 }
