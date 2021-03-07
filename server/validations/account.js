@@ -2,7 +2,7 @@ import {body} from "express-validator";
 import User from "../models/User.js";
 import {usernameLength, passwordLength} from "../models/schemas/user.js";
 
-export let registerModelValidation = [
+export const registerModelValidation = [
     body("username")
         .toLowerCase()
         .custom(value => {
@@ -61,7 +61,7 @@ export let registerModelValidation = [
         })
 ]
 
-export let loginModelValidation = [
+export const loginModelValidation = [
     body("username")
         .exists()
         .withMessage("Username is required."),
