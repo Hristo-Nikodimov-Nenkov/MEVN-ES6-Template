@@ -66,6 +66,11 @@ const confirmPasswordValidation =
             }
         });
 
+const currentPasswordValidation =
+    body("oldPassword")
+        .exists()
+        .withMessage("Current password is required.");
+
 const phoneNumberValidation =
     body("phoneNumber")
         .toLowerCase();
@@ -99,6 +104,7 @@ export const updateProfileValidation = [
 ]
 
 export const changePasswordValidation = [
+    currentPasswordValidation,
     passwordValidation,
     confirmPasswordValidation
 ]
