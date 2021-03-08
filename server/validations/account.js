@@ -69,7 +69,17 @@ const confirmPasswordValidation =
 const currentPasswordValidation =
     body("oldPassword")
         .exists()
-        .withMessage("Current password is required.");
+        .withMessage("Current password is required.")
+        .bail()
+        .custom((val, {req}) => {
+            const user = User.findById(req.user.id);
+
+            if (!user.checkPassword(val)) {
+                throw new Error("Current password is NOT valid.");
+            } else {
+                return val;
+            }
+        });
 
 const phoneNumberValidation =
     body("phoneNumber")
