@@ -61,6 +61,14 @@ export async function update(id, model) {
     }
 }
 
+export async function changePassword(id, password) {
+    const user = await User.findById(id);
+    user.setPassword(password);
+    const result = await user.save();
+    console.log(result);
+    return result;
+}
+
 export async function remove(id) {
     const deleted = await User.findByIdAndRemove(id, {useFindAndModify: false}).exec();
     return !!deleted;
@@ -70,5 +78,6 @@ export default {
     register,
     login,
     update,
+    changePassword,
     remove
 }
