@@ -18,7 +18,7 @@ router.post("/login",loginModelValidation, account.loginPost);
 router.post("/logout", isAuthenticated, account.logoutPost);
 router.get("/profile", isAuthenticated, account.profileGet);
 router.put("/profile", isAuthenticated, ...updateProfileValidation, account.profileUpdate);
-router.post("/profile/password", isAuthenticated, ...changePasswordValidation, account.passwordUpdate)
 router.delete("/profile", isAuthenticated, account.profileDelete);
+router.post("/password", isAuthenticated, ...changePasswordValidation, account.passwordUpdate)
 
 export default router;
