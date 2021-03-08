@@ -68,7 +68,23 @@ async function profileUpdate(req, res) {
 }
 
 async function passwordUpdate(req, res) {
-    res.status(200).send("POST: /Account/Profile/Password");
+    const errors = validationResult(req).array();
+    if (errors.length > 0) {
+        res.status(400).send(errors);
+        return;
+    }
+
+    try {
+        const passwordChanged = account.changePassword(req.user.id, req.body.password)
+        if(!passwordChanged){
+            res.status(400).send("Password is NOT changed.");
+            return;
+        }
+
+        res.status(200).send("Password changed.");
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 async function profileDelete(req, res) {
